@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +13,23 @@
     <h1>Weather App</h1>
 
     <div class="search-box">
-      <input type="text" id="cityInput" placeholder="Enter city name">
+      <input
+        type="text"
+        id="cityInput"
+        placeholder="Enter city name"
+      >
       <button id="searchBtn">Search</button>
     </div>
+
+    <button id="locationBtn" class="location-btn">
+      📍 Use My Current Location
+    </button>
+
+    <p id="loading" class="loading" style="display: none;">
+      Loading weather...
+    </p>
+
+    <p id="statusMsg" class="status"></p>
 
     <div class="weather-info" id="weatherInfo">
       <h2 id="cityName"></h2>
@@ -30,6 +45,8 @@
     <p class="error" id="errorMsg"></p>
   </div>
 
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
