@@ -1,0 +1,49 @@
+
+name: Weather App CI
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - test
+      - master
+
+  pull_request:
+    branches:
+      - test
+      - master
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Weather App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Check JavaScript syntax
+        run: node --check script.js
+
+      - name: Verify required files
+        run: |
+          test -f index.html
+          test -f script.js
+          test -f style.css
+
+          echo "All required files exist."
+
+      - name: CI completed
+        run: echo "Weather App validation successful!"
+
+
