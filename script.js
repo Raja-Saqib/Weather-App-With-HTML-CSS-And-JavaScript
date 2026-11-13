@@ -211,6 +211,7 @@ function getWeather() {
 
 // Display weather information
 function displayWeather(data) {
+  const total;
 
   cityName.textContent = data.name;
 
