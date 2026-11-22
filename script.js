@@ -14,6 +14,7 @@ const wind = document.getElementById("wind");
 
 const errorMsg = document.getElementById("errorMsg");
 const loading = document.getElementById("loading");
+const loadingText = document.getElementById("loadingText");
 const statusMsg = document.getElementById("statusMsg");
 
 // Event listeners
@@ -29,16 +30,18 @@ cityInput.addEventListener("keypress", function (event) {
 // Automatically detect location when application loads
 window.addEventListener("load", getCurrentLocation);
 
-// Loading indicator
+// Display loading animation
 function showLoading(message = "Loading weather...") {
-  loading.textContent = message;
-  loading.style.display = "block";
+  loadingText.textContent = message;
+
+  loading.style.display = "flex";
 
   errorMsg.textContent = "";
   statusMsg.textContent = "";
   weatherInfo.style.display = "none";
 }
 
+// Hide loading animation
 function hideLoading() {
   loading.style.display = "none";
 }
