@@ -207,4 +207,175 @@ body {
   }
 }
 
+/* =================================
+   WADV-4: Theme Variables
+================================= */
+
+:root {
+  --background: linear-gradient(to right, #4facfe, #00f2fe);
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --secondary-text: #555555;
+  --input-background: #ffffff;
+  --input-border: #cccccc;
+  --button-background: #4facfe;
+  --button-hover: #008fe0;
+  --button-text: #ffffff;
+  --spinner-border: #e0e0e0;
+  --spinner-active: #4facfe;
+  --status-color: #555555;
+}
+
+/* Dark Theme */
+
+body[data-theme="dark"] {
+  --background: linear-gradient(to right, #141e30, #243b55);
+  --card-background: #1e293b;
+  --text-color: #f1f5f9;
+  --secondary-text: #cbd5e1;
+  --input-background: #334155;
+  --input-border: #64748b;
+  --button-background: #2563eb;
+  --button-hover: #1d4ed8;
+  --button-text: #ffffff;
+  --spinner-border: #475569;
+  --spinner-active: #60a5fa;
+  --status-color: #cbd5e1;
+}
+
+/* =================================
+   Apply Theme Variables
+================================= */
+
+body {
+  background: var(--background);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.weather-container {
+  background: var(--card-background);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.weather-container h1,
+.weather-container h2 {
+  color: var(--text-color);
+}
+
+.weather-info p,
+.details {
+  color: var(--secondary-text);
+}
+
+.search-box input {
+  background: var(--input-background);
+  color: var(--text-color);
+  border-color: var(--input-border);
+}
+
+.search-box input::placeholder {
+  color: var(--secondary-text);
+}
+
+.search-box button,
+.location-btn {
+  background: var(--button-background);
+  color: var(--button-text);
+}
+
+.search-box button:hover,
+.location-btn:hover {
+  background: var(--button-hover);
+}
+
+.status {
+  color: var(--status-color);
+}
+
+.loading {
+  color: var(--spinner-active);
+}
+
+.spinner {
+  border-color: var(--spinner-border);
+  border-top-color: var(--spinner-active);
+}
+
+/* =================================
+   Temperature Buttons
+================================= */
+
+.unit-btn {
+  background: var(--input-background);
+  color: var(--text-color);
+  border-color: var(--button-background);
+}
+
+.unit-btn:hover {
+  background: var(--button-background);
+  color: var(--button-text);
+}
+
+.unit-btn.active {
+  background: var(--button-background);
+  color: var(--button-text);
+}
+
+/* =================================
+   Theme Toggle
+================================= */
+
+.theme-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.theme-toggle {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--button-background);
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--button-hover);
+}
+
+.theme-toggle:focus-visible,
+.search-box button:focus-visible,
+.location-btn:focus-visible,
+.unit-btn:focus-visible {
+  outline: 3px solid var(--spinner-active);
+  outline-offset: 3px;
+}
+
+/* Error visibility in both themes */
+
+.error {
+  color: #dc2626;
+}
+
+body[data-theme="dark"] .error {
+  color: #fca5a5;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 480px) {
+  .theme-toggle-container {
+    margin-bottom: 12px;
+  }
+
+  .theme-toggle {
+    padding: 8px 10px;
+  }
+}
+
 
