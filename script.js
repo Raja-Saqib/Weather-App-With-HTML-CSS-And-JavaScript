@@ -1,6 +1,7 @@
 
 const apiKey = config.apiKey;
 
+const themeToggle = document.getElementById("themeToggle");
 const searchBtn = document.getElementById("searchBtn");
 const locationBtn = document.getElementById("locationBtn");
 const cityInput = document.getElementById("cityInput");
@@ -29,6 +30,7 @@ const loadingText = document.getElementById("loadingText");
 const statusMsg = document.getElementById("statusMsg");
 
 // Event listeners
+themeToggle.addEventListener("click", toggleTheme);
 searchBtn.addEventListener("click", getWeather);
 locationBtn.addEventListener("click", getCurrentLocation);
 
@@ -272,6 +274,66 @@ async function getWeather() {
     hideLoading();
   }
 }
+
+// Initialize saved theme
+function initializeTheme() {
+
+  let savedTheme = "light";
+
+  try {
+    savedTheme = localStorage.getItem("weatherAppTheme") || "light";
+  } catch (error) {
+    console.warn("Unable to access saved theme preference.");
+  }
+
+  applyTheme(savedTheme);
+}
+
+// Apply selected theme
+function applyTheme(theme) {
+
+  const isDark = theme === "dark";
+
+  document.body.setAttribute(
+    "data-theme",
+    isDark ? "dark" : "light"
+  );
+
+  themeToggle.textContent = isDark
+    ? "☀️ Light Mode"
+    : "🌙 Dark Mode";
+
+  themeToggle.setAttribute(
+    "aria-label",
+    isDark ? "Switch to light mode" : "Switch to dark mode"
+  );
+
+  themeToggle.setAttribute(
+    "aria-pressed",
+    String(isDark)
+  );
+}
+
+// Toggle between light and dark themes
+function toggleTheme() {
+
+  const currentTheme =
+    document.body.getAttribute("data-theme");
+
+  const newTheme =
+    currentTheme === "dark" ? "light" : "dark";
+
+  applyTheme(newTheme);
+
+  try {
+    localStorage.setItem("weatherAppTheme", newTheme);
+  } catch (error) {
+    console.warn("Unable to save theme preference.");
+  }
+}
+
+// Initialize theme when script loads
+initializeTheme();
 
 // Get weather icon based on OpenWeather condition codes
 function getWeatherIcon(weatherId, iconCode) {
