@@ -9,6 +9,7 @@ const weatherInfo = document.getElementById("weatherInfo");
 const cityName = document.getElementById("cityName");
 const temperature = document.getElementById("temperature");
 const condition = document.getElementById("condition");
+const weatherIcon = document.getElementById("weatherIcon");
 const humidity = document.getElementById("humidity");
 const wind = document.getElementById("wind");
 
@@ -254,15 +255,76 @@ async function getWeather() {
   }
 }
 
+// Get weather icon based on OpenWeather condition codes
+function getWeatherIcon(weatherId, iconCode) {
+
+  // Thunderstorm
+  if (weatherId >= 200 && weatherId < 300) {
+    return "⛈️";
+  }
+
+  // Drizzle
+  if (weatherId >= 300 && weatherId < 400) {
+    return "🌦️";
+  }
+
+  // Rain
+  if (weatherId >= 500 && weatherId < 600) {
+    return "🌧️";
+  }
+
+  // Snow
+  if (weatherId >= 600 && weatherId < 700) {
+    return "❄️";
+  }
+
+  // Atmosphere: mist, smoke, haze, fog, etc.
+  if (weatherId >= 700 && weatherId < 800) {
+    return "🌫️";
+  }
+
+  // Clear sky
+  if (weatherId === 800) {
+    return iconCode && iconCode.endsWith("n")
+      ? "🌙"
+      : "☀️";
+  }
+
+  // Clouds
+  if (weatherId > 800 && weatherId < 900) {
+    if (weatherId === 801) {
+      return "🌤️";
+    }
+
+    if (weatherId === 802) {
+      return "⛅";
+    }
+
+    return "☁️";
+  }
+
+  // Fallback icon
+  return "🌡️";
+}
+
 // Display weather information
 function displayWeather(data) {
+
   cityName.textContent = data.name;
 
   temperature.textContent =
     `🌡️ ${data.main.temp} °C`;
 
+  // Get weather condition
+  const weatherId = data.weather[0].id;
+  const iconCode = data.weather[0].icon;
+
+  // Update dynamic weather icon
+  weatherIcon.textContent =
+    getWeatherIcon(weatherId, iconCode);
+
   condition.textContent =
-    `☁️ ${data.weather[0].description}`;
+    ` ${data.weather[0].description}`;
 
   humidity.textContent =
     `💧 Humidity: ${data.main.humidity}%`;
