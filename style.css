@@ -378,4 +378,77 @@ body[data-theme="dark"] .error {
   }
 }
 
+/* =================================
+   WADV-9: Recent Search History
+================================= */
+
+.history-container {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.history-header h3 {
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.clear-history-btn {
+  border: none;
+  background: transparent;
+  color: var(--button-background);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.clear-history-btn:hover {
+  text-decoration: underline;
+}
+
+.recent-searches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-item {
+  padding: 7px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 20px;
+  background: var(--input-background);
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s ease;
+}
+
+.history-item:hover {
+  background: var(--button-background);
+  color: #ffffff;
+}
+
+.empty-history {
+  color: var(--secondary-text);
+  font-size: 13px;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 480px) {
+  .history-item {
+    padding: 8px 11px;
+  }
+
+  .history-header h3 {
+    font-size: 14px;
+  }
+}
+
 

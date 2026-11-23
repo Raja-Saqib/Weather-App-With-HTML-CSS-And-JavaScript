@@ -6,6 +6,21 @@ const searchBtn = document.getElementById("searchBtn");
 const locationBtn = document.getElementById("locationBtn");
 const cityInput = document.getElementById("cityInput");
 
+// Recent Search History elements
+const historyContainer =
+  document.getElementById("historyContainer");
+
+const recentSearches =
+  document.getElementById("recentSearches");
+
+const clearHistoryBtn =
+  document.getElementById("clearHistoryBtn");
+
+// Maximum number of recent searches
+const MAX_HISTORY = 5;
+
+const HISTORY_KEY = "weatherSearchHistory";
+
 const weatherInfo = document.getElementById("weatherInfo");
 const cityName = document.getElementById("cityName");
 
@@ -32,6 +47,10 @@ const statusMsg = document.getElementById("statusMsg");
 // Event listeners
 themeToggle.addEventListener("click", toggleTheme);
 searchBtn.addEventListener("click", getWeather);
+
+// Clear recent search history
+clearHistoryBtn.addEventListener("click", clearSearchHistory);
+
 locationBtn.addEventListener("click", getCurrentLocation);
 
 celsiusBtn.addEventListener("click", function () {
@@ -265,6 +284,9 @@ async function getWeather() {
 
     displayWeather(data);
 
+    // Save city only after successful API response
+    saveRecentSearch(data.name);
+
     statusMsg.textContent =
       "Weather retrieved using city search.";
   } catch (error) {
@@ -334,6 +356,116 @@ function toggleTheme() {
 
 // Initialize theme when script loads
 initializeTheme();
+
+// Get saved search history
+function getSearchHistory() {
+
+  try {
+    const history = localStorage.getItem(HISTORY_KEY);
+
+    const parsedHistory = history
+      ? JSON.parse(history)
+      : [];
+
+    return Array.isArray(parsedHistory)
+      ? parsedHistory.filter(
+          city => typeof city === "string" && city.trim() !== ""
+        )
+      : [];
+
+  } catch (error) {
+    console.error("Unable to load search history:", error);
+    return [];
+  }
+}
+
+// Save a successfully searched city
+function saveRecentSearch(city) {
+
+  if (!city || !city.trim()) {
+    return;
+  }
+
+  try {
+    let history = getSearchHistory();
+
+    // Remove duplicate cities (case-insensitive)
+    history = history.filter(
+      item => item.toLowerCase() !== city.toLowerCase()
+    );
+
+    // Add latest city at the beginning
+    history.unshift(city.trim());
+
+    // Keep only the latest five searches
+    history = history.slice(0, MAX_HISTORY);
+
+    localStorage.setItem(
+      HISTORY_KEY,
+      JSON.stringify(history)
+    );
+
+    renderSearchHistory();
+
+  } catch (error) {
+    console.error("Unable to save search history:", error);
+  }
+}
+
+// Display recent searches
+function renderSearchHistory() {
+
+  const history = getSearchHistory();
+
+  recentSearches.replaceChildren();
+
+  if (history.length === 0) {
+
+    const emptyMessage = document.createElement("p");
+
+    emptyMessage.className = "empty-history";
+    emptyMessage.textContent = "No recent searches yet.";
+
+    recentSearches.appendChild(emptyMessage);
+
+    return;
+  }
+
+  history.forEach(city => {
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "history-item";
+    button.textContent = city;
+
+    button.addEventListener("click", function () {
+
+      cityInput.value = city;
+
+      getWeather();
+
+    });
+
+    recentSearches.appendChild(button);
+  });
+}
+
+// Clear all recent searches
+function clearSearchHistory() {
+
+  try {
+    localStorage.removeItem(HISTORY_KEY);
+
+    renderSearchHistory();
+
+  } catch (error) {
+    console.error("Unable to clear search history:", error);
+  }
+}
+
+// Load history when application starts
+renderSearchHistory();
 
 // Get weather icon based on OpenWeather condition codes
 function getWeatherIcon(weatherId, iconCode) {
