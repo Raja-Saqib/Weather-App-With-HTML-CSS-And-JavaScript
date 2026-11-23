@@ -171,4 +171,40 @@ body {
   }
 }
 
+/* Temperature Unit Toggle */
+.unit-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.unit-btn {
+  padding: 7px 16px;
+  border: 1px solid #4facfe;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #008fe0;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.unit-btn:hover {
+  background: #e8f5ff;
+}
+
+.unit-btn.active {
+  background: #4facfe;
+  color: #ffffff;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .unit-btn {
+    padding: 8px 18px;
+  }
+}
+
 

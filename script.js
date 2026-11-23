@@ -7,7 +7,17 @@ const cityInput = document.getElementById("cityInput");
 
 const weatherInfo = document.getElementById("weatherInfo");
 const cityName = document.getElementById("cityName");
+
 const temperature = document.getElementById("temperature");
+const celsiusBtn = document.getElementById("celsiusBtn");
+const fahrenheitBtn = document.getElementById("fahrenheitBtn");
+
+// Default temperature unit
+let selectedUnit = "C";
+
+// Store original temperature in Celsius
+let currentTemperatureCelsius = null;
+
 const condition = document.getElementById("condition");
 const weatherIcon = document.getElementById("weatherIcon");
 const humidity = document.getElementById("humidity");
@@ -21,6 +31,14 @@ const statusMsg = document.getElementById("statusMsg");
 // Event listeners
 searchBtn.addEventListener("click", getWeather);
 locationBtn.addEventListener("click", getCurrentLocation);
+
+celsiusBtn.addEventListener("click", function () {
+  changeTemperatureUnit("C");
+});
+
+fahrenheitBtn.addEventListener("click", function () {
+  changeTemperatureUnit("F");
+});
 
 cityInput.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
@@ -307,13 +325,52 @@ function getWeatherIcon(weatherId, iconCode) {
   return "🌡️";
 }
 
+// Change temperature unit
+function changeTemperatureUnit(unit) {
+
+  selectedUnit = unit;
+
+  // Update active button
+  celsiusBtn.classList.toggle("active", unit === "C");
+  fahrenheitBtn.classList.toggle("active", unit === "F");
+
+  // Update temperature if weather data exists
+  updateTemperatureDisplay();
+}
+
+// Update displayed temperature
+function updateTemperatureDisplay() {
+
+  if (currentTemperatureCelsius === null) {
+    return;
+  }
+
+  let displayedTemperature;
+
+  if (selectedUnit === "F") {
+
+    displayedTemperature =
+      (currentTemperatureCelsius * 9 / 5) + 32;
+
+  } else {
+
+    displayedTemperature = currentTemperatureCelsius;
+  }
+
+  temperature.textContent =
+    `🌡️ ${displayedTemperature.toFixed(1)} °${selectedUnit}`;
+}
+
 // Display weather information
 function displayWeather(data) {
 
   cityName.textContent = data.name;
 
-  temperature.textContent =
-    `🌡️ ${data.main.temp} °C`;
+  // Store original temperature in Celsius
+  currentTemperatureCelsius = data.main.temp;
+
+  // Display temperature using selected unit
+  updateTemperatureDisplay();
 
   // Get weather condition
   const weatherId = data.weather[0].id;
