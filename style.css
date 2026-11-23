@@ -151,4 +151,24 @@ body {
   font-size: 14px;
 }
 
+/* Dynamic Weather Icons */
+.weather-icon {
+  font-size: 75px;
+  line-height: 1.3;
+  margin: 10px 0;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.weather-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .weather-icon {
+    font-size: 60px;
+  }
+}
+
 
