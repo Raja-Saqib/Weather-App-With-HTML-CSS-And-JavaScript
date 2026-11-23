@@ -34,6 +34,31 @@
       <button id="searchBtn">Search</button>
     </div>
 
+    <!-- Recent Search History -->
+    <div class="history-container" id="historyContainer">
+
+      <div class="history-header">
+        <h3>Recent Searches</h3>
+
+        <button
+          id="clearHistoryBtn"
+          class="clear-history-btn"
+          type="button"
+        >
+          Clear
+        </button>
+      </div>
+
+      <div
+        id="recentSearches"
+        class="recent-searches"
+        aria-live="polite"
+      >
+        <p class="empty-history">No recent searches yet.</p>
+      </div>
+
+    </div>
+
     <button id="locationBtn" class="location-btn">
       📍 Use My Current Location
     </button>
